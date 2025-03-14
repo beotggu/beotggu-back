@@ -1,5 +1,6 @@
 package com.example.demo.user.controller;
 
+import com.example.demo.config.KakaoConfig;
 import com.example.demo.user.dto.KakaoAuthResponse;
 import com.example.demo.user.dto.KakaoLoginRequest;
 import com.example.demo.user.dto.KakaoTokenResponse;
@@ -18,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/api/user")
 @Tag(name="User",description = "사용자 정보")
 public class UserController {
+    private final KakaoConfig kakaoConfig;
+
     @PostMapping("/login")
     public ResponseEntity<KakaoAuthResponse> login(@RequestBody KakaoLoginRequest request) {
         log.info("Received Kakao login request: {}", request.getCode());
@@ -28,9 +31,8 @@ public class UserController {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("code", code);
-        params.add("redirect_uri", "http://localhost:5173/auth/login/kakao");
-        params.add("client_id", "8162b95c200bcd82ce88d8c5468f41c5");
-
+        params.add("redirect_uri", kakaoConfig.getRedirectUri());
+        params.add("client_id", kakaoConfig.getClientId());
         log.info("Generated request body: {}", params); // Body 확인
 
         // Header 생성
