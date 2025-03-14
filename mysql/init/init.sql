@@ -1,5 +1,5 @@
 -- 테이블 생성 및 초기 설정
-CREATE TABLE IF NOT EXISTS USER (
+CREATE TABLE IF NOT EXISTS USERS (
                                     social_id VARCHAR(100) PRIMARY KEY,
     name VARCHAR(100) NOT NULL
     );

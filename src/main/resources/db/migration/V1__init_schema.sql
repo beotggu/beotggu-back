@@ -1,13 +1,13 @@
 -- V1__init_schema.sql
 -- src/main/resources/db/migration 디렉토리에 저장
 
--- USER 테이블 생성
+-- 사용자 테이블 생성 (USER는 예약어이므로 USERS 사용)
 CREATE TABLE USERS (
-                      social_id VARCHAR(100) PRIMARY KEY,
-                      name VARCHAR(100) NOT NULL
+                       social_id VARCHAR(100) PRIMARY KEY,
+                       name VARCHAR(100) NOT NULL
 );
 
--- SCENE 테이블 생성
+-- SCENE 테이블 생성 (USERS 테이블 참조로 수정)
 CREATE TABLE SCENE (
                        scene_id INT AUTO_INCREMENT PRIMARY KEY,
                        social_id VARCHAR(100) NOT NULL UNIQUE,
@@ -16,7 +16,7 @@ CREATE TABLE SCENE (
                        longitude DECIMAL(12,8) NOT NULL,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                       FOREIGN KEY (social_id) REFERENCES USER(social_id)
+                       FOREIGN KEY (social_id) REFERENCES USERS(social_id)
 );
 
 -- MESSAGE 테이블 생성
