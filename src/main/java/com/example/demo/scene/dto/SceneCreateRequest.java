@@ -5,11 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SceneDto {
-//    private Long sceneId;
-//    private String socialId;
+public class SceneCreateRequest {
+
+    private String socialId;
     private String theme;
     private Double latitude;
     private Double longitude;
-    private boolean isVisible;
 }
