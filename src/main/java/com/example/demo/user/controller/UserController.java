@@ -2,16 +2,22 @@ package com.example.demo.user.controller;
 
 import com.example.demo.config.KakaoConfig;
 import com.example.demo.user.dto.KakaoAuthResponse;
+import com.example.demo.user.dto.KakaoInfoResponse;
 import com.example.demo.user.dto.KakaoLoginRequest;
 import com.example.demo.user.dto.KakaoTokenResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j // Lombok을 이용한 로깅
 @RestController
@@ -70,8 +76,40 @@ public class UserController {
 
         return ResponseEntity.ok(authResponse);
     }
-    @GetMapping("/info")
-    public String getUserInfo(){
-        return "user info";
+
+    @GetMapping(path = "/info")
+    public Map<String, String> getUserInfo(@RequestHeader("access-token") String accessToken ){
+
+        // Body 생성
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        // Header 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=UTF-8");
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
+
+        // Get 요청 보내기
+        RestTemplate rt = new RestTemplate();
+        ResponseEntity<KakaoInfoResponse> response = rt.exchange(
+                "https://kapi.kakao.com/v2/user/me?secure_resource=true&property_keys=[\"kakao_account.email\",\"kakao_account.profile.nickname\",\"kakao_account.profile.profile_image_url\"]",
+                HttpMethod.GET,
+                entity,
+                KakaoInfoResponse.class
+        );
+        // 응답에서 필요한 값만 추출
+        KakaoInfoResponse kakaoInfoResponse = response.getBody();
+        String email = kakaoInfoResponse.getKakao_account().getEmail();
+        String nickname = kakaoInfoResponse.getKakao_account().getProfile().getNickname();
+        String profileImageUrl = kakaoInfoResponse.getKakao_account().getProfile().getProfile_image_url();
+
+        // 반환할 정보
+        Map<String, String> result = new HashMap<>();
+        result.put("email", email);
+        result.put("nickname", nickname);
+        result.put("profile_image_url", profileImageUrl);
+
+        return result;
     }
 }
