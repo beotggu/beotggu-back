@@ -25,6 +25,6 @@ public class Scene {
     @Column(nullable = false, precision = 11, scale = 8)
     private Double latitude;
 
-    @Column(nullable = false, precision = 12, 8)
+    @Column(nullable = false, precision = 12, scale = 8)
     private Double longitude;
 }
