@@ -27,4 +27,7 @@ public class Scene {
 
     @Column(nullable = false)
     private Double longitude;
+
+    @Column(nullable = false)
+    private boolean isVisible = false;
 }
