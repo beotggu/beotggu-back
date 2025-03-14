@@ -2,7 +2,7 @@
 -- src/main/resources/db/migration 디렉토리에 저장
 
 -- USER 테이블 생성
-CREATE TABLE USER (
+CREATE TABLE USERS (
                       social_id VARCHAR(100) PRIMARY KEY,
                       name VARCHAR(100) NOT NULL
 );

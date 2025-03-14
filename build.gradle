@@ -65,4 +65,4 @@ tasks.named('test') {
 bootRun {
     systemProperty 'spring.profiles.active', System.getProperty('spring.profiles.active', 'dev')
 }
-rootProject.name = 'raindrop'
+
