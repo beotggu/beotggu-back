@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.message.service;
 
-import com.example.demo.domain.Message;
-import com.example.demo.repository.MessageRepository;
+import com.example.demo.message.domain.Message;
+import com.example.demo.message.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

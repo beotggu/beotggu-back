@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.scene.service;
 
-import com.example.demo.domain.Scene;
-import com.example.demo.repository.SceneRepository;
+import com.example.demo.scene.domain.Scene;
+import com.example.demo.scene.repository.SceneRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
