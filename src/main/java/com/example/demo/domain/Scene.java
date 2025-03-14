@@ -22,9 +22,9 @@ public class Scene {
     @Column(nullable = false)
     private String theme;
 
-    @Column(nullable = false, precision = 11, scale = 8)
+    @Column(nullable = false)
     private Double latitude;
 
-    @Column(nullable = false, precision = 12, scale = 8)
+    @Column(nullable = false)
     private Double longitude;
 }
